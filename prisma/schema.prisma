@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          String    @default("user")
+
+  accounts Account[]
+  sessions Session[]
+  attempts Attempt[]
+  feedbacks Feedback[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Question {
+  id          String      @id @default(cuid())
+  externalId  String?     @unique
+  title       String
+  content     String
+  topic       String?
+  difficulty  Difficulty?
+  aiTopic     String?
+  aiDifficulty Difficulty?
+  aiScore     Int?
+  lastAiEvaluatedAt DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  steps     SolutionStep[]
+  attempts  Attempt[]
+  feedbacks Feedback[]
+
+  @@index([topic])
+  @@index([difficulty])
+  @@index([aiTopic])
+  @@index([aiDifficulty])
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model SolutionStep {
+  id          String   @id @default(cuid())
+  externalId  String?  @unique
+  questionId  String
+  order       Int
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, order])
+}
+
+model Attempt {
+  id          String      @id @default(cuid())
+  externalId  String?     @unique
+  questionId  String
+  userId      String?
+  correct     Boolean
+  timeMs      Int
+  attempts    Int         @default(1)
+  source      String      @default("app")
+  topic       String?
+  difficulty  Difficulty?
+  appUserId   String?
+  studentName String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  question    Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  user        User?       @relation(fields: [userId], references: [id])
+
+  @@index([questionId])
+  @@index([createdAt])
+}
+
+model Feedback {
+  id          String   @id @default(cuid())
+  externalId  String?  @unique
+  questionId  String?
+  userId      String?
+  rating      Int
+  comment     String?
+  appUserId   String?
+  studentName String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  question    Question? @relation(fields: [questionId], references: [id], onDelete: SetNull)
+  user        User?     @relation(fields: [userId], references: [id])
+
+  @@index([questionId])
+  @@index([createdAt])
+}

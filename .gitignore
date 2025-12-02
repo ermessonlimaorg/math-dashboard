@@ -1,0 +1,7 @@
+node_modules
+.next
+.env
+.pnpm-store
+dist
+*.log
+docker-data
