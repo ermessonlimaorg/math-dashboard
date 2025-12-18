@@ -45,6 +45,30 @@ const dashboardSteps: Step[] = [
     placement: 'bottom',
   },
   {
+    target: '[data-tour="charts"]',
+    content: (
+      <div>
+        <h3 className="font-bold text-slate-900 mb-2">Gráficos e Estatísticas</h3>
+        <p className="text-slate-600">
+          Visualize a distribuição das questões por tópico, dificuldade e pontuação da IA. Os gráficos ajudam a identificar padrões e áreas que precisam de mais atenção.
+        </p>
+      </div>
+    ),
+    placement: 'top',
+  },
+  {
+    target: '[data-tour="recent-questions"]',
+    content: (
+      <div>
+        <h3 className="font-bold text-slate-900 mb-2">Últimas Questões</h3>
+        <p className="text-slate-600">
+          Veja as questões mais recentes sincronizadas. Clique em qualquer uma para ver detalhes completos, incluindo passos de solução e avaliação da IA.
+        </p>
+      </div>
+    ),
+    placement: 'top',
+  },
+  {
     target: '[data-tour="sidebar-questions"]',
     content: (
       <div>

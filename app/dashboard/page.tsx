@@ -69,7 +69,9 @@ export default async function DashboardPage() {
         <MetricCard title="Pendentes de IA" value={data.pendingClassify} icon="pending" />
       </div>
 
-      <DashboardCharts />
+      <div data-tour="charts">
+        <DashboardCharts />
+      </div>
 
       {!data.dbHealthy && (
         <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-xl p-4 flex items-start gap-3">
@@ -80,7 +82,7 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      <div className="card">
+      <div data-tour="recent-questions" className="card">
         <div className="p-4 md:p-6 border-b border-slate-100">
           <h2 className="text-lg font-semibold text-slate-900">Últimas questões</h2>
         </div>
