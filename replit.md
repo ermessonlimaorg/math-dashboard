@@ -22,7 +22,9 @@ Key capabilities:
 - Updated color scheme with orange accents and glass morphism effects
 - Added guided onboarding tour using react-joyride (desktop only, auto-starts on first visit)
 - Added floating help button to restart the tour anytime
-- Tour is now page-specific: each page (Questions, Feedback, Avaliação IA) has seu próprio tour
+- Tour is now page-specific: each page (Questions, Feedback, Avaliação IA, Histórico) has seu próprio tour
+- Added sync history feature: /historico page displays all sync operations with status, counts, timestamps, and error details
+- New SyncLog model tracks every sync request (success/error) for debugging and audit purposes
 
 ## User Preferences
 
@@ -50,7 +52,7 @@ Preferred communication style: Simple, everyday language (Portuguese).
 ### Data Storage
 - **Database**: PostgreSQL
 - **ORM**: Prisma with migrations and seeding
-- **Models**: User, Question, SolutionStep, Attempt, Feedback
+- **Models**: User, Question, SolutionStep, Attempt, Feedback, SyncLog
 - **Sync Support**: `externalId` fields for upsert operations from mobile app
 
 ### Authentication Flow
