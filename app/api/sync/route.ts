@@ -16,7 +16,38 @@ async function ensureQuestionId(externalId: string, map: Map<string, string>) {
   return question.id
 }
 
+async function logSync(
+  status: 'success' | 'error',
+  summary: { questions: number; solutionSteps: number; attempts: number; feedbacks: number },
+  req: Request,
+  errorMessage?: string
+) {
+  try {
+    await prisma.syncLog.create({
+      data: {
+        status,
+        questionsCount: summary.questions,
+        stepsCount: summary.solutionSteps,
+        attemptsCount: summary.attempts,
+        feedbacksCount: summary.feedbacks,
+        errorMessage: errorMessage ?? null,
+        ipAddress: req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip') ?? null,
+        userAgent: req.headers.get('user-agent') ?? null,
+      },
+    })
+  } catch (e) {
+    console.error('Failed to log sync:', e)
+  }
+}
+
 export async function POST(req: Request) {
+  const summary = {
+    questions: 0,
+    solutionSteps: 0,
+    attempts: 0,
+    feedbacks: 0,
+  }
+
   try {
     const body = await req.json()
     const parsed = syncPayloadSchema.parse(body)
@@ -24,15 +55,9 @@ export async function POST(req: Request) {
     if (SYNC_API_KEY) {
       const providedKey = req.headers.get('x-api-key') ?? parsed.apiKey
       if (providedKey !== SYNC_API_KEY) {
+        await logSync('error', summary, req, 'Unauthorized')
         return new NextResponse('Unauthorized', { status: 401 })
       }
-    }
-
-    const summary = {
-      questions: 0,
-      solutionSteps: 0,
-      attempts: 0,
-      feedbacks: 0,
     }
 
     const questionIdByExternal = new Map<string, string>()
@@ -65,9 +90,9 @@ export async function POST(req: Request) {
           questionId = await ensureQuestionId(step.questionExternalId, questionIdByExternal)
         }
         if (!questionId) {
-          return new NextResponse(`Question not found for solution step ${step.externalId ?? ''}`, {
-            status: 400,
-          })
+          const errMsg = `Question not found for solution step ${step.externalId ?? ''}`
+          await logSync('error', summary, req, errMsg)
+          return new NextResponse(errMsg, { status: 400 })
         }
 
         const data = {
@@ -99,9 +124,9 @@ export async function POST(req: Request) {
           questionId = await ensureQuestionId(attempt.questionExternalId, questionIdByExternal)
         }
         if (!questionId) {
-          return new NextResponse(`Question not found for attempt ${attempt.externalId ?? ''}`, {
-            status: 400,
-          })
+          const errMsg = `Question not found for attempt ${attempt.externalId ?? ''}`
+          await logSync('error', summary, req, errMsg)
+          return new NextResponse(errMsg, { status: 400 })
         }
 
         const data: any = {
@@ -166,8 +191,10 @@ export async function POST(req: Request) {
       }
     }
 
+    await logSync('success', summary, req)
     return NextResponse.json({ ok: true, ...summary })
   } catch (e: any) {
+    await logSync('error', summary, req, e?.message || 'Invalid payload')
     return new NextResponse(e?.message || 'Invalid payload', { status: 400 })
   }
 }

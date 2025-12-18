@@ -51,10 +51,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const isAuthenticated = status === 'authenticated'
   const showNav = isAuthenticated || isLoading
 
-  const getCurrentPage = (): 'dashboard' | 'questions' | 'feedback' | 'avaliacao' => {
+  const getCurrentPage = (): 'dashboard' | 'questions' | 'feedback' | 'avaliacao' | 'historico' => {
     if (pathname === '/questions' || pathname.startsWith('/questions/')) return 'questions'
     if (pathname === '/feedback' || pathname.startsWith('/feedback/')) return 'feedback'
     if (pathname === '/avaliacao' || pathname.startsWith('/avaliacao/')) return 'avaliacao'
+    if (pathname === '/historico' || pathname.startsWith('/historico/')) return 'historico'
     return 'dashboard'
   }
 

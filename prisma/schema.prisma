@@ -144,3 +144,19 @@ model Feedback {
   @@index([questionId])
   @@index([createdAt])
 }
+
+model SyncLog {
+  id              String   @id @default(cuid())
+  status          String   @default("success")
+  questionsCount  Int      @default(0)
+  stepsCount      Int      @default(0)
+  attemptsCount   Int      @default(0)
+  feedbacksCount  Int      @default(0)
+  errorMessage    String?
+  ipAddress       String?
+  userAgent       String?
+  createdAt       DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([status])
+}

@@ -81,6 +81,18 @@ const dashboardSteps: Step[] = [
     placement: 'right',
   },
   {
+    target: '[data-tour="sidebar-historico"]',
+    content: (
+      <div>
+        <h3 className="font-bold text-slate-900 mb-2">Histórico</h3>
+        <p className="text-slate-600">
+          Acompanhe todas as sincronizações realizadas pelo aplicativo, com detalhes de cada operação.
+        </p>
+      </div>
+    ),
+    placement: 'right',
+  },
+  {
     target: '[data-tour="help-button"]',
     content: (
       <div className="text-center">
@@ -231,10 +243,50 @@ const tourStyles = {
   },
 }
 
+const historicoSteps: Step[] = [
+  {
+    target: '[data-tour="historico-header"]',
+    content: (
+      <div>
+        <h3 className="font-bold text-slate-900 mb-2">Histórico de Sincronizações</h3>
+        <p className="text-slate-600">
+          Aqui você acompanha todas as sincronizações feitas pelo aplicativo móvel.
+        </p>
+      </div>
+    ),
+    placement: 'bottom',
+    disableBeacon: true,
+  },
+  {
+    target: '[data-tour="historico-stats"]',
+    content: (
+      <div>
+        <h3 className="font-bold text-slate-900 mb-2">Estatísticas Gerais</h3>
+        <p className="text-slate-600">
+          Veja o total de sincronizações, quantas foram bem-sucedidas e quantas tiveram erro.
+        </p>
+      </div>
+    ),
+    placement: 'bottom',
+  },
+  {
+    target: '[data-tour="historico-list"]',
+    content: (
+      <div>
+        <h3 className="font-bold text-slate-900 mb-2">Lista de Sincronizações</h3>
+        <p className="text-slate-600">
+          Clique em qualquer sincronização para ver os detalhes: quantas questões, passos, tentativas e feedbacks foram sincronizados.
+        </p>
+      </div>
+    ),
+    placement: 'top',
+  },
+]
+
 interface OnboardingTourProps {
   run: boolean
   onFinish: () => void
-  currentPage: 'dashboard' | 'questions' | 'feedback' | 'avaliacao'
+  currentPage: 'dashboard' | 'questions' | 'feedback' | 'avaliacao' | 'historico'
 }
 
 export default function OnboardingTour({ run, onFinish, currentPage }: OnboardingTourProps) {
@@ -252,6 +304,8 @@ export default function OnboardingTour({ run, onFinish, currentPage }: Onboardin
         return feedbackSteps
       case 'avaliacao':
         return avaliacaoSteps
+      case 'historico':
+        return historicoSteps
       case 'dashboard':
       default:
         return dashboardSteps
