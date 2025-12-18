@@ -10,6 +10,7 @@ channel = "stable-25_05"
 [userenv.shared]
 NEXTAUTH_SECRET = "9IyCtW6sg8GklkQxjG2p99X1bdVfcbECCXL0aGmtUVs="
 NEXTAUTH_URL = "https://a63631f0-98d6-427e-b7af-e5b3ae4f95ed-00-37q85bhvmc1vk.worf.replit.dev"
+SUPABASE_DATABASE_URL = "postgresql://postgres.ssylyzoymmjplorovfjb:WjOsy8DqD5aZDRRz@aws-0-us-west-2.pooler.supabase.com:5432/postgres"
 
 [workflows]
 runButton = "Project"
