@@ -1,0 +1,347 @@
+Restarting ermessonlimaorg/math-dashboard:main on localhost.
+2025-Dec-18 04:47:16.798611
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.12
+2025-Dec-18 04:47:20.681048
+Configuration changed. Rebuilding image.
+2025-Dec-18 04:47:20.686935
+Starting deployment of ermessonlimaorg/math-dashboard:main to localhost.
+2025-Dec-18 04:47:21.395184
+Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.12
+2025-Dec-18 04:47:25.284877
+Configuration changed. Rebuilding image.
+2025-Dec-18 04:47:25.517423
+----------------------------------------
+2025-Dec-18 04:47:25.526673
+Importing ermessonlimaorg/math-dashboard:main (commit sha a00a1b419d2656cbd23d07972dd037f3040bd387) to /artifacts/zw0g4g40k88gw080ws0okcc4.
+2025-Dec-18 04:47:28.517242
+Generating nixpacks configuration with: nixpacks plan -f json --env NIXPACKS_NODE_VERSION=22 --env COOLIFY_URL=mathia.space --env COOLIFY_FQDN=mathia.space --env COOLIFY_BRANCH=main --env COOLIFY_RESOURCE_UUID=ls0kssg44co8g0wo4kgokscg /artifacts/zw0g4g40k88gw080ws0okcc4
+2025-Dec-18 04:47:29.438992
+Found application type: node.
+2025-Dec-18 04:47:29.446544
+If you need further customization, please check the documentation of Nixpacks: https://nixpacks.com/docs/providers/node
+2025-Dec-18 04:47:31.610950
+----------------------------------------
+2025-Dec-18 04:47:31.619025
+Building docker image started.
+2025-Dec-18 04:47:31.625835
+To check the current progress, click on Show Debug Logs.
+2025-Dec-18 04:48:06.600085
+========================================
+2025-Dec-18 04:48:06.607950
+Deployment failed: Command execution failed (exit code 1): docker exec zw0g4g40k88gw080ws0okcc4 bash -c 'bash /artifacts/build.sh'
+2025-Dec-18 04:48:06.607950
+Error: #0 building with "default" instance using docker driver
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#1 [internal] load build definition from Dockerfile
+2025-Dec-18 04:48:06.607950
+#1 transferring dockerfile: 1.49kB done
+2025-Dec-18 04:48:06.607950
+#1 DONE 0.0s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#2 [internal] load metadata for ghcr.io/railwayapp/nixpacks:ubuntu-1745885067
+2025-Dec-18 04:48:06.607950
+#2 DONE 0.3s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#3 [internal] load .dockerignore
+2025-Dec-18 04:48:06.607950
+#3 transferring context: 77B done
+2025-Dec-18 04:48:06.607950
+#3 DONE 0.0s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#4 [stage-0  1/11] FROM ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de
+2025-Dec-18 04:48:06.607950
+#4 resolve ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de 0.0s done
+2025-Dec-18 04:48:06.607950
+#4 DONE 0.0s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#5 [internal] load build context
+2025-Dec-18 04:48:06.607950
+#5 transferring context: 1.14MB 0.0s done
+2025-Dec-18 04:48:06.607950
+#5 DONE 0.1s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#6 [stage-0  2/11] WORKDIR /app/
+2025-Dec-18 04:48:06.607950
+#6 CACHED
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#7 [stage-0  3/11] COPY .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix
+2025-Dec-18 04:48:06.607950
+#7 CACHED
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#8 [stage-0  4/11] RUN nix-env -if .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix && nix-collect-garbage -d
+2025-Dec-18 04:48:06.607950
+#8 CACHED
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#9 [stage-0  5/11] RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends curl wget
+2025-Dec-18 04:48:06.607950
+#9 CACHED
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#10 [stage-0  6/11] COPY . /app/.
+2025-Dec-18 04:48:06.607950
+#10 DONE 0.1s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#11 [stage-0  7/11] RUN --mount=type=cache,id=ls0kssg44co8g0wo4kgokscg-/root/local/share/pnpm/store/v3,target=/root/.local/share/pnpm/store/v3 pnpm i --frozen-lockfile
+2025-Dec-18 04:48:06.607950
+#11 0.782 Lockfile is up to date, resolution step is skipped
+2025-Dec-18 04:48:06.607950
+#11 0.852 Progress: resolved 1, reused 0, downloaded 0, added 0
+2025-Dec-18 04:48:06.607950
+#11 0.997 Packages: +449
+2025-Dec-18 04:48:06.607950
+#11 0.997 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2025-Dec-18 04:48:06.607950
+#11 1.852 Progress: resolved 449, reused 211, downloaded 0, added 0
+2025-Dec-18 04:48:06.607950
+#11 2.853 Progress: resolved 449, reused 449, downloaded 0, added 12
+2025-Dec-18 04:48:06.607950
+#11 3.855 Progress: resolved 449, reused 449, downloaded 0, added 13
+2025-Dec-18 04:48:06.607950
+#11 4.858 Progress: resolved 449, reused 449, downloaded 0, added 15
+2025-Dec-18 04:48:06.607950
+#11 5.857 Progress: resolved 449, reused 449, downloaded 0, added 47
+2025-Dec-18 04:48:06.607950
+#11 6.859 Progress: resolved 449, reused 449, downloaded 0, added 99
+2025-Dec-18 04:48:06.607950
+#11 7.859 Progress: resolved 449, reused 449, downloaded 0, added 284
+2025-Dec-18 04:48:06.607950
+#11 8.860 Progress: resolved 449, reused 449, downloaded 0, added 414
+2025-Dec-18 04:48:06.607950
+#11 9.240 Progress: resolved 449, reused 449, downloaded 0, added 449, done
+2025-Dec-18 04:48:06.607950
+#11 9.763
+2025-Dec-18 04:48:06.607950
+#11 9.763 dependencies:
+2025-Dec-18 04:48:06.607950
+#11 9.763 + @next-auth/prisma-adapter 1.0.7
+2025-Dec-18 04:48:06.607950
+#11 9.763 + @prisma/client 5.17.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + bcryptjs 2.4.3
+2025-Dec-18 04:48:06.607950
+#11 9.763 + clsx 2.0.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + dayjs 1.11.10
+2025-Dec-18 04:48:06.607950
+#11 9.763 + echarts 5.5.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + echarts-for-react 3.0.2
+2025-Dec-18 04:48:06.607950
+#11 9.763 + next 14.2.5
+2025-Dec-18 04:48:06.607950
+#11 9.763 + next-auth 4.24.7
+2025-Dec-18 04:48:06.607950
+#11 9.763 + openai 4.104.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + react 18.2.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + react-dom 18.2.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + react-hot-toast 2.4.1
+2025-Dec-18 04:48:06.607950
+#11 9.763 + zod 3.23.8
+2025-Dec-18 04:48:06.607950
+#11 9.763
+2025-Dec-18 04:48:06.607950
+#11 9.763 devDependencies:
+2025-Dec-18 04:48:06.607950
+#11 9.763 + @types/bcryptjs 2.4.2
+2025-Dec-18 04:48:06.607950
+#11 9.763 + @types/node 20.12.7
+2025-Dec-18 04:48:06.607950
+#11 9.763 + @types/react 18.2.72
+2025-Dec-18 04:48:06.607950
+#11 9.763 + autoprefixer 10.4.19
+2025-Dec-18 04:48:06.607950
+#11 9.763 + eslint 8.57.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + eslint-config-next 14.2.5
+2025-Dec-18 04:48:06.607950
+#11 9.763 + postcss 8.4.38
+2025-Dec-18 04:48:06.607950
+#11 9.763 + prisma 5.17.0
+2025-Dec-18 04:48:06.607950
+#11 9.763 + tailwindcss 3.4.4
+2025-Dec-18 04:48:06.607950
+#11 9.763 + ts-node 10.9.2
+2025-Dec-18 04:48:06.607950
+#11 9.763 + tsx 4.19.1
+2025-Dec-18 04:48:06.607950
+#11 9.763 + typescript 5.5.3
+2025-Dec-18 04:48:06.607950
+#11 9.763
+2025-Dec-18 04:48:06.607950
+#11 9.802 Done in 9.6s using pnpm v9.15.9
+2025-Dec-18 04:48:06.607950
+#11 DONE 10.0s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#12 [stage-0  8/11] COPY . /app/.
+2025-Dec-18 04:48:06.607950
+#12 DONE 0.4s
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+#13 [stage-0  9/11] RUN --mount=type=cache,id=ls0kssg44co8g0wo4kgokscg-next/cache,target=/app/.next/cache --mount=type=cache,id=ls0kssg44co8g0wo4kgokscg-node_modules/cache,target=/app/node_modules/.cache pnpm run build
+2025-Dec-18 04:48:06.607950
+#13 0.629
+2025-Dec-18 04:48:06.607950
+#13 0.629 > math-dashboard@0.1.0 build /app
+2025-Dec-18 04:48:06.607950
+#13 0.629 > next build
+2025-Dec-18 04:48:06.607950
+#13 0.629
+2025-Dec-18 04:48:06.607950
+#13 1.464   ▲ Next.js 14.2.5
+2025-Dec-18 04:48:06.607950
+#13 1.465
+2025-Dec-18 04:48:06.607950
+#13 1.534    Creating an optimized production build ...
+2025-Dec-18 04:48:06.607950
+#13 14.05  ✓ Compiled successfully
+2025-Dec-18 04:48:06.607950
+#13 14.06    Linting and checking validity of types ...
+2025-Dec-18 04:48:06.607950
+#13 20.46    Collecting page data ...
+2025-Dec-18 04:48:06.607950
+#13 21.00 Error: Cannot find module '.prisma/client/default'
+2025-Dec-18 04:48:06.607950
+#13 21.00 Require stack:
+2025-Dec-18 04:48:06.607950
+#13 21.00 - /app/node_modules/.pnpm/@prisma+client@5.17.0_prisma@5.17.0/node_modules/@prisma/client/default.js
+2025-Dec-18 04:48:06.607950
+#13 21.00 - /app/.next/server/app/api/keepalive/route.js
+2025-Dec-18 04:48:06.607950
+#13 21.00 - /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/server/require.js
+2025-Dec-18 04:48:06.607950
+#13 21.00 - /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/server/load-components.js
+2025-Dec-18 04:48:06.607950
+#13 21.00 - /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/build/utils.js
+2025-Dec-18 04:48:06.607950
+#13 21.00 - /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/build/worker.js
+2025-Dec-18 04:48:06.607950
+#13 21.00 - /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/compiled/jest-worker/processChild.js
+2025-Dec-18 04:48:06.607950
+#13 21.00     at Function. (node:internal/modules/cjs/loader:1249:15)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/server/require-hook.js:55:36
+2025-Dec-18 04:48:06.607950
+#13 21.00     at Function._load (node:internal/modules/cjs/loader:1075:27)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at Module. (node:internal/modules/cjs/loader:1340:12)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at mod.require (/app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/server/require-hook.js:65:28)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at require (node:internal/modules/helpers:141:16)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at Object. (/app/node_modules/.pnpm/@prisma+client@5.17.0_prisma@5.17.0/node_modules/@prisma/client/default.js:2:6)
+2025-Dec-18 04:48:06.607950
+#13 21.00     at Module._compile (node:internal/modules/cjs/loader:1546:14) {
+2025-Dec-18 04:48:06.607950
+#13 21.00   code: 'MODULE_NOT_FOUND',
+2025-Dec-18 04:48:06.607950
+#13 21.00   requireStack: [
+2025-Dec-18 04:48:06.607950
+#13 21.00     '/app/node_modules/.pnpm/@prisma+client@5.17.0_prisma@5.17.0/node_modules/@prisma/client/default.js',
+2025-Dec-18 04:48:06.607950
+#13 21.00     '/app/.next/server/app/api/keepalive/route.js',
+2025-Dec-18 04:48:06.607950
+#13 21.00     '/app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/server/require.js',
+2025-Dec-18 04:48:06.607950
+#13 21.00     '/app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/server/load-components.js',
+2025-Dec-18 04:48:06.607950
+#13 21.00     '/app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/build/utils.js',
+2025-Dec-18 04:48:06.607950
+#13 21.00     '/app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/build/worker.js',
+2025-Dec-18 04:48:06.607950
+#13 21.00     '/app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/compiled/jest-worker/processChild.js'
+2025-Dec-18 04:48:06.607950
+#13 21.00   ]
+2025-Dec-18 04:48:06.607950
+#13 21.00 }
+2025-Dec-18 04:48:06.607950
+#13 21.01
+2025-Dec-18 04:48:06.607950
+#13 21.01 > Build error occurred
+2025-Dec-18 04:48:06.607950
+#13 21.01 Error: Failed to collect page data for /api/keepalive
+2025-Dec-18 04:48:06.607950
+#13 21.01     at /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/build/utils.js:1268:15
+2025-Dec-18 04:48:06.607950
+#13 21.01     at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-Dec-18 04:48:06.607950
+#13 21.01   type: 'Error'
+2025-Dec-18 04:48:06.607950
+#13 21.01 }
+2025-Dec-18 04:48:06.607950
+#13 21.03  ELIFECYCLE  Command failed with exit code 1.
+2025-Dec-18 04:48:06.607950
+#13 ERROR: process "/bin/bash -ol pipefail -c pnpm run build" did not complete successfully: exit code: 1
+2025-Dec-18 04:48:06.607950
+------
+2025-Dec-18 04:48:06.607950
+> [stage-0  9/11] RUN --mount=type=cache,id=ls0kssg44co8g0wo4kgokscg-next/cache,target=/app/.next/cache --mount=type=cache,id=ls0kssg44co8g0wo4kgokscg-node_modules/cache,target=/app/node_modules/.cache pnpm run build:
+2025-Dec-18 04:48:06.607950
+21.00   ]
+2025-Dec-18 04:48:06.607950
+21.00 }
+2025-Dec-18 04:48:06.607950
+21.01
+2025-Dec-18 04:48:06.607950
+21.01 > Build error occurred
+2025-Dec-18 04:48:06.607950
+21.01 Error: Failed to collect page data for /api/keepalive
+2025-Dec-18 04:48:06.607950
+21.01     at /app/node_modules/.pnpm/next@14.2.5_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/next/dist/build/utils.js:1268:15
+2025-Dec-18 04:48:06.607950
+21.01     at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+2025-Dec-18 04:48:06.607950
+21.01   type: 'Error'
+2025-Dec-18 04:48:06.607950
+21.01 }
+2025-Dec-18 04:48:06.607950
+21.03  ELIFECYCLE  Command failed with exit code 1.
+2025-Dec-18 04:48:06.607950
+------
+2025-Dec-18 04:48:06.607950
+2025-Dec-18 04:48:06.607950
+1 warning found (use docker --debug to expand):
+2025-Dec-18 04:48:06.607950
+- UndefinedVar: Usage of undefined variable '$NIXPACKS_PATH' (line 18)
+2025-Dec-18 04:48:06.607950
+Dockerfile:24
+2025-Dec-18 04:48:06.607950
+--------------------
+2025-Dec-18 04:48:06.607950
+22 |     # build phase
+2025-Dec-18 04:48:06.607950
+23 |     COPY . /app/.
+2025-Dec-18 04:48:06.607950
+24 | >>> RUN --mount=type=cache,id=ls0kssg44co8g0wo4kgokscg-next/cache,target=/app/.next/cache --mount=type=cache,id=ls0kssg44co8g0wo4kgokscg-node_modules/cache,target=/app/node_modules/.cache pnpm run build
+2025-Dec-18 04:48:06.607950
+25 |
+2025-Dec-18 04:48:06.607950
+26 |
+2025-Dec-18 04:48:06.607950
+--------------------
+2025-Dec-18 04:48:06.607950
+ERROR: failed to build: failed to solve: process "/bin/bash -ol pipefail -c pnpm run build" did not complete successfully: exit code: 1
+2025-Dec-18 04:48:06.607950
+exit status 1
+2025-Dec-18 04:48:06.701177
+========================================
+2025-Dec-18 04:48:06.710191
+Deployment failed. Removing the new version of your application.
