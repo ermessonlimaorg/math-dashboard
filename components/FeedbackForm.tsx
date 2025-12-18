@@ -58,11 +58,7 @@ export default function FeedbackForm() {
   }, [])
 
   async function submit() {
-    if (!questionId) {
-      toast.error('Selecione uma questão.')
-      return
-    }
-    if (evaluatedLocal.has(questionId)) {
+    if (questionId && evaluatedLocal.has(questionId)) {
       toast.error('Esta questão já recebeu feedback.')
       return
     }
@@ -76,12 +72,12 @@ export default function FeedbackForm() {
       toast.success('Feedback enviado')
       setComment('')
       if (questionId) {
-          setEvaluatedLocal(prev => {
-            const next = new Set(prev).add(questionId)
-            window.localStorage.setItem('feedback-evaluated', JSON.stringify(Array.from(next)))
-            return next
-          })
-          window.dispatchEvent(new CustomEvent('feedback-updated', { detail: { questionId, action: 'create' } }))
+        setEvaluatedLocal(prev => {
+          const next = new Set(prev).add(questionId)
+          window.localStorage.setItem('feedback-evaluated', JSON.stringify(Array.from(next)))
+          return next
+        })
+        window.dispatchEvent(new CustomEvent('feedback-updated', { detail: { questionId, action: 'create' } }))
       }
     } else {
       toast.error('Falha ao enviar')
@@ -89,22 +85,16 @@ export default function FeedbackForm() {
   }
 
   return (
-    <div className="bg-white rounded shadow-sm p-4 space-y-3">
-      <div className="font-medium">Enviar feedback</div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
-        <div>
-          <label className="text-xs text-gray-500">Questão (opcional)</label>
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="md:col-span-2 space-y-1.5">
+          <label className="label">Questão (opcional)</label>
           <select
             value={questionId}
-            onChange={e => {
-              const id = e.target.value
-              setQuestionId(id)
-            }}
-            className="block border rounded px-3 py-2 w-full"
+            onChange={e => setQuestionId(e.target.value)}
+            className="input"
           >
-            <option value="" disabled>
-              Selecione uma questão
-            </option>
+            <option value="">Feedback geral (nenhuma questão)</option>
             {questions.map(q => (
               <option key={q.id} value={q.id} disabled={evaluatedLocal.has(q.id)}>
                 {q.title} {evaluatedLocal.has(q.id) ? '(já avaliada)' : ''}
@@ -112,23 +102,44 @@ export default function FeedbackForm() {
             ))}
           </select>
         </div>
-        <div>
-          <label className="text-xs text-gray-500">Nota</label>
-          <input type="number" min={1} max={5} value={rating} onChange={e => setRating(Number(e.target.value))}
-                 className="block border rounded px-3 py-2 w-full"/>
-        </div>
-        <div>
-          <button
-            onClick={submit}
-            disabled={!questionId}
-            className={`rounded px-4 py-2 ${questionId ? 'bg-gray-900 text-white hover:bg-gray-800' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}`}
-          >
-            Enviar
-          </button>
+        <div className="space-y-1.5">
+          <label className="label">Nota (1-5)</label>
+          <div className="flex items-center gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => setRating(star)}
+                className={`p-1 rounded-lg transition-colors ${rating >= star ? 'text-amber-500' : 'text-slate-300 hover:text-slate-400'}`}
+              >
+                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-      <textarea value={comment} onChange={e => setComment(e.target.value)}
-        placeholder="Comentários" className="w-full border rounded px-3 py-2 h-24 font-mono text-sm" />
+      <div className="space-y-1.5">
+        <label className="label">Comentários (opcional)</label>
+        <textarea
+          value={comment}
+          onChange={e => setComment(e.target.value)}
+          placeholder="Deixe seu comentário aqui..."
+          className="input min-h-[120px] resize-y"
+        />
+      </div>
+      <div className="flex justify-end">
+        <button
+          onClick={submit}
+          className="btn-primary"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+          </svg>
+          Enviar feedback
+        </button>
+      </div>
     </div>
   )
 }

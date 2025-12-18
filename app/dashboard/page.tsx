@@ -57,27 +57,34 @@ export default async function DashboardPage() {
   const data = await getDashboardData()
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 md:space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Painel</h1>
-        <p className="text-sm text-gray-500">Resumo das questões sincronizadas e classificadas pela IA.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Painel</h1>
+        <p className="text-sm md:text-base text-slate-500 mt-1">Resumo das questões sincronizadas e classificadas pela IA.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <MetricCard title="Questões" value={data.questionsCount} />
-        <MetricCard title="Usuários únicos" value={data.uniqueUsers} />
-        <MetricCard title="Pendentes de IA" value={data.pendingClassify} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <MetricCard title="Questões" value={data.questionsCount} icon="questions" />
+        <MetricCard title="Usuários únicos" value={data.uniqueUsers} icon="users" />
+        <MetricCard title="Pendentes de IA" value={data.pendingClassify} icon="pending" />
       </div>
+
       <DashboardCharts />
+
       {!data.dbHealthy && (
-        <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded-lg p-3">
-          Não foi possível conectar ao banco. Algumas informações podem não aparecer.
+        <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-xl p-4 flex items-start gap-3">
+          <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>Não foi possível conectar ao banco. Algumas informações podem não aparecer.</span>
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <div className="mb-3 font-semibold text-gray-900">Últimas questões</div>
-        <div className="divide-y">
+      <div className="card">
+        <div className="p-4 md:p-6 border-b border-slate-100">
+          <h2 className="text-lg font-semibold text-slate-900">Últimas questões</h2>
+        </div>
+        <div className="divide-y divide-slate-100">
           {data.latest.map((q) => {
             const user = q.attempts[0]
             const topic = q.topic || q.aiTopic || 'Matemática'
@@ -85,34 +92,43 @@ export default async function DashboardPage() {
               <Link
                 key={q.id}
                 href={`/questions/${q.id}`}
-                className="block py-3 hover:bg-gray-50 transition rounded-lg -mx-2 px-2"
+                className="block p-4 md:p-5 hover:bg-slate-50 transition-colors"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-sm font-semibold text-gray-900">{q.title}</div>
-                    <div className="text-xs text-gray-500">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold text-slate-900 truncate">{q.title}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">
                       {user?.studentName ?? 'Sem nome'} {user?.appUserId ? `(${user.appUserId})` : ''}
                     </div>
+                    <p className="text-sm text-slate-600 mt-2 line-clamp-2">{q.content}</p>
+                    <div className="text-xs text-slate-400 mt-2">{new Date(q.createdAt).toLocaleString('pt-BR')}</div>
                   </div>
-                  <div className="flex gap-2 text-xs">
-                    <span className="px-2 py-1 rounded-full bg-orange-50 text-orange-700">{topic}</span>
+                  <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
+                    <span className="inline-flex px-2.5 py-1 rounded-full bg-gradient-to-r from-orange-100 to-rose-100 text-orange-700 text-xs font-medium">
+                      {topic}
+                    </span>
                     {typeof q.aiScore === 'number' && (
-                      <span className="px-2 py-1 rounded-full bg-green-50 text-green-700">IA: {q.aiScore}</span>
+                      <span className="inline-flex px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-medium">
+                        IA: {q.aiScore}
+                      </span>
                     )}
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mt-2 line-clamp-2">{q.content}</p>
-                <div className="text-xs text-gray-400 mt-1">{new Date(q.createdAt).toLocaleString('pt-BR')}</div>
               </Link>
             )
           })}
           {data.latest.length === 0 && (
-            <div className="py-6 text-center text-sm text-gray-500">Nenhuma questão cadastrada ainda.</div>
+            <div className="p-8 md:p-12 text-center">
+              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <p className="text-sm text-slate-500">Nenhuma questão cadastrada ainda.</p>
+            </div>
           )}
         </div>
       </div>
-
-
     </div>
   )
 }

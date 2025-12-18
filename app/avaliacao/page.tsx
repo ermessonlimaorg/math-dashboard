@@ -78,8 +78,8 @@ export default function AvaliacaoPage() {
     }
 
     setLoading(true)
-      setResult(null)
-      setSuggestion(null)
+    setResult(null)
+    setSuggestion(null)
     try {
       const res = await fetch('/api/evaluate', {
         method: 'POST',
@@ -143,20 +143,20 @@ export default function AvaliacaoPage() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 md:space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Avaliação com IA</h1>
-        <p className="text-sm text-gray-500">Escolha um usuário, selecione uma questão e envie para a IA avaliar.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Avaliação com IA</h1>
+        <p className="text-sm md:text-base text-slate-500 mt-1">Escolha um usuário, selecione uma questão e envie para a IA avaliar.</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="space-y-1">
-            <label className="text-sm font-semibold text-gray-700">Usuário</label>
+      <div className="card p-4 md:p-6 space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-1.5">
+            <label className="label">Usuário</label>
             <select
               value={selectedUser}
               onChange={e => { setSelectedUser(e.target.value); setSelectedQuestion(''); }}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-300"
+              className="input"
             >
               <option value="">{loadingList ? 'Carregando...' : 'Selecione'}</option>
               {userOptions.map(opt => (
@@ -164,8 +164,8 @@ export default function AvaliacaoPage() {
               ))}
             </select>
           </div>
-          <div className="md:col-span-2 space-y-1">
-            <label className="text-sm font-semibold text-gray-700">Questão</label>
+          <div className="md:col-span-2 space-y-1.5">
+            <label className="label">Questão</label>
             <select
               value={selectedQuestion}
               onChange={e => {
@@ -175,7 +175,7 @@ export default function AvaliacaoPage() {
                 setAnswer('')
               }}
               disabled={!selectedUser || questionOptions.length === 0}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-300 disabled:bg-gray-100 disabled:text-gray-400"
+              className="input disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
             >
               <option value="">{selectedUser ? 'Selecione a questão' : 'Selecione um usuário'}</option>
               {questionOptions.map(q => (
@@ -186,50 +186,78 @@ export default function AvaliacaoPage() {
         </div>
 
         {selectedQuestionObj && (
-          <div className="rounded-lg border border-orange-100 bg-orange-50 px-4 py-3 space-y-1">
+          <div className="rounded-xl border border-orange-200 bg-gradient-to-r from-orange-50 to-rose-50 p-4 space-y-2">
             <div className="text-sm font-semibold text-orange-800">Enunciado</div>
-            <div className="text-sm text-orange-900 whitespace-pre-wrap">{selectedQuestionObj.content}</div> 
+            <div className="text-sm text-slate-700 whitespace-pre-wrap">{selectedQuestionObj.content}</div> 
           </div>
         )}
 
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-gray-700">Resposta do aluno (opcional)</label>
+        <div className="space-y-1.5">
+          <label className="label">Resposta do aluno (opcional)</label>
           <textarea
             value={answer}
             onChange={e => setAnswer(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm min-h-[100px] focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-300"
+            className="input min-h-[120px] resize-y"
             placeholder="Cole a resposta do aluno para receber feedback específico..."
           />
         </div>
 
-        <div className="flex justify-end">
-          <button
-            onClick={handleEval}
-            disabled={loading || !selectedQuestionObj}
-            className="px-4 py-2 rounded-lg bg-orange-600 text-white text-sm font-semibold hover:bg-orange-500 disabled:opacity-60"
-          >
-            {loading ? 'Avaliando...' : 'Avaliar com IA'}
-          </button>
+        <div className="flex flex-col sm:flex-row justify-end gap-3">
           <button
             onClick={() => handleSuggest()}
             disabled={suggestLoading || !selectedQuestionObj}
-            className="ml-3 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 disabled:opacity-60"
+            className="btn-secondary order-2 sm:order-1"
           >
+            {suggestLoading ? (
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            )}
             {suggestLoading ? 'Gerando...' : 'Sugerir nova questão'}
+          </button>
+          <button
+            onClick={handleEval}
+            disabled={loading || !selectedQuestionObj}
+            className="btn-primary order-1 sm:order-2"
+          >
+            {loading ? (
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611l-.772.129a9.062 9.062 0 01-3.038.007l-.774-.13c-1.718-.294-2.3-2.38-1.067-3.612L16 15.306" />
+              </svg>
+            )}
+            {loading ? 'Avaliando...' : 'Avaliar com IA'}
           </button>
         </div>
       </div>
 
       {result && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="text-lg font-semibold text-gray-900">Avaliação da IA</div>
+        <div className="card p-4 md:p-6 space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h2 className="text-lg font-semibold text-slate-900">Avaliação da IA</h2>
             {typeof result.score === 'number' && (
               <div className="flex items-center gap-2">
-                <div className="px-3 py-1 rounded-full bg-orange-50 text-orange-700 text-sm font-semibold">
+                <span className="inline-flex px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-500 to-rose-500 text-white text-sm font-semibold shadow-lg shadow-orange-500/25">
                   Score: {result.score}
-                </div>
-                <div className="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs">
+                </span>
+                <span className={`inline-flex px-3 py-1.5 rounded-full text-xs font-medium ${
+                  result.score >= 85
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : result.score >= 70
+                    ? 'bg-blue-100 text-blue-700'
+                    : result.score >= 50
+                    ? 'bg-amber-100 text-amber-700'
+                    : 'bg-rose-100 text-rose-700'
+                }`}>
                   {result.score >= 85
                     ? 'Excelente'
                     : result.score >= 70
@@ -237,24 +265,29 @@ export default function AvaliacaoPage() {
                     : result.score >= 50
                     ? 'Mediana'
                     : 'Precisa melhorar'}
-                </div>
+                </span>
               </div>
             )}
           </div>
 
           {result.resumo && (
-            <div className="space-y-1">
-              <div className="text-sm font-semibold text-gray-800">Resumo</div>
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">{result.resumo}</p>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-slate-800">Resumo</h3>
+              <p className="text-sm text-slate-600 whitespace-pre-wrap leading-relaxed">{result.resumo}</p>
             </div>
           )}
 
           {result.sugestoes?.length ? (
-            <div className="space-y-1">
-              <div className="text-sm font-semibold text-gray-800">Sugestões</div>
-              <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-slate-800">Sugestões</h3>
+              <ul className="space-y-2">
                 {result.sugestoes.map((s, idx) => (
-                  <li key={idx}>{s}</li>
+                  <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
+                    <svg className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {s}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -263,24 +296,26 @@ export default function AvaliacaoPage() {
       )}
 
       {suggestion && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 space-y-3">
-          <div className="text-lg font-semibold text-gray-900">Sugestão de nova questão</div>
+        <div className="card p-4 md:p-6 space-y-5">
+          <h2 className="text-lg font-semibold text-slate-900">Sugestão de nova questão</h2>
           {suggestion.question && (
-            <div className="space-y-1">
-              <div className="text-sm font-semibold text-gray-800">Enunciado sugerido</div>
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">{suggestion.question}</p>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-slate-800">Enunciado sugerido</h3>
+              <div className="rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 p-4">
+                <p className="text-sm text-slate-700 whitespace-pre-wrap">{suggestion.question}</p>
+              </div>
             </div>
           )}
           {suggestion.rationale && (
-            <div className="space-y-1">
-              <div className="text-sm font-semibold text-gray-800">Por que essa sugestão?</div>
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">{suggestion.rationale}</p>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-slate-800">Por que essa sugestão?</h3>
+              <p className="text-sm text-slate-600 whitespace-pre-wrap leading-relaxed">{suggestion.rationale}</p>
             </div>
           )}
           {suggestion.imageBase64 && (
-            <div>
-              <div className="text-sm font-semibold text-gray-800 mb-1">Imagem de apoio</div>
-              <div className="w-full max-w-md rounded-lg border overflow-hidden bg-gray-50">
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-slate-800">Imagem de apoio</h3>
+              <div className="w-full max-w-md rounded-xl border border-slate-200 overflow-hidden bg-slate-50">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`data:image/png;base64,${suggestion.imageBase64}`}

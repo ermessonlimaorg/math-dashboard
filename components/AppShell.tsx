@@ -2,29 +2,21 @@
 
 import { ReactNode } from 'react'
 import { useSession } from 'next-auth/react'
-import clsx from 'clsx'
 import Sidebar from './Sidebar'
+import MobileNav from './MobileNav'
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const { status } = useSession()
-  const showSidebar = status === 'authenticated'
+  const showNav = status === 'authenticated'
 
   return (
-    <div
-      className={clsx(
-        'flex min-h-screen transition-colors',
-        showSidebar ? 'bg-orange-50 text-slate-900' : 'bg-gray-50 text-slate-900'
-      )}
-    >
-      {showSidebar && <Sidebar />}
-      <main
-        className={clsx(
-          'flex-1 p-6',
-          showSidebar ? 'bg-orange-50' : 'bg-gray-50',
-          showSidebar && 'md:pl-2'
-        )}
-      >
-        {children}
+    <div className="flex min-h-screen bg-slate-50">
+      {showNav && <Sidebar />}
+      {showNav && <MobileNav />}
+      <main className={`flex-1 ${showNav ? 'pt-16 md:pt-0' : ''}`}>
+        <div className="p-4 md:p-8 max-w-7xl mx-auto">
+          {children}
+        </div>
       </main>
     </div>
   )
