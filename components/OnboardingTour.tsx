@@ -90,7 +90,7 @@ const dashboardSteps: Step[] = [
         </p>
       </div>
     ),
-    placement: 'left',
+    placement: 'top-end',
   },
 ]
 
@@ -287,6 +287,7 @@ export default function OnboardingTour({ run, onFinish, currentPage }: Onboardin
         last: 'Finalizar',
         next: 'Próximo',
         skip: 'Pular tour',
+        open: 'Abrir tour',
       }}
     />
   )
