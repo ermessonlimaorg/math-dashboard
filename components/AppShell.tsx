@@ -113,7 +113,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen bg-slate-50">
       {showNav && <Sidebar />}
       {showNav && <MobileNav />}
-      <main className={`flex-1 ${showNav ? 'pt-16 md:pt-0' : ''}`}>
+      <main className={`flex-1 overflow-x-hidden ${showNav ? 'pt-16 md:pt-0' : ''}`}>
         <div className="p-4 md:p-6 lg:p-8">
           {children}
         </div>

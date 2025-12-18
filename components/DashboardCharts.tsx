@@ -150,18 +150,18 @@ export default function DashboardCharts() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-      <div className="card p-4 md:p-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 overflow-hidden">
+      <div className="card p-4 md:p-6 overflow-hidden">
         <h3 className="font-semibold text-slate-900 mb-3 md:mb-4 text-sm md:text-base">Questões sincronizadas (últimos 14 dias)</h3>
         {loading ? (
           <div style={{ height: chartHeight }} className="flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
-          <ReactECharts option={barOption} style={{ height: chartHeight }} notMerge lazyUpdate />
+          <ReactECharts option={barOption} style={{ height: chartHeight, width: '100%' }} notMerge lazyUpdate />
         )}
       </div>
-      <div className="card p-4 md:p-6">
+      <div className="card p-4 md:p-6 overflow-hidden">
         <h3 className="font-semibold text-slate-900 mb-3 md:mb-4 text-sm md:text-base">Distribuição de scores da IA</h3>
         {loading ? (
           <div style={{ height: chartHeight }} className="flex items-center justify-center">
@@ -179,7 +179,7 @@ export default function DashboardCharts() {
             </div>
           </div>
         ) : (
-          <ReactECharts option={scoreOption} style={{ height: chartHeight }} notMerge lazyUpdate />
+          <ReactECharts option={scoreOption} style={{ height: chartHeight, width: '100%' }} notMerge lazyUpdate />
         )}
       </div>
     </div>

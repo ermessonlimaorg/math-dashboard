@@ -57,7 +57,7 @@ export default async function DashboardPage() {
   const data = await getDashboardData()
 
   return (
-    <div className="space-y-6 md:space-y-8">
+    <div className="space-y-6 md:space-y-8 overflow-x-hidden">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Painel</h1>
         <p className="text-sm md:text-base text-slate-500 mt-1">Resumo das questões sincronizadas e classificadas pela IA.</p>
@@ -69,7 +69,7 @@ export default async function DashboardPage() {
         <MetricCard title="Pendentes de IA" value={data.pendingClassify} icon="pending" />
       </div>
 
-      <div data-tour="charts">
+      <div data-tour="charts" className="overflow-hidden">
         <DashboardCharts />
       </div>
 
