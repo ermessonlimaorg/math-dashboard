@@ -21,7 +21,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       {showNav && <Sidebar />}
       {showNav && <MobileNav />}
       <main className={`flex-1 ${showNav ? 'pt-16 md:pt-0' : ''}`}>
-        <div className="p-4 md:p-8 max-w-7xl mx-auto">
+        <div className="p-4 md:p-6 lg:p-8">
           {children}
         </div>
       </main>
