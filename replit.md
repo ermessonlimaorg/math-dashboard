@@ -20,6 +20,8 @@ Key capabilities:
 - Fixed server-side rendering bugs (replaced toLocaleString with Intl.DateTimeFormat)
 - Feedback form now allows general feedback without selecting a question
 - Updated color scheme with orange accents and glass morphism effects
+- Added guided onboarding tour using react-joyride (desktop only, auto-starts on first visit)
+- Added floating help button to restart the tour anytime
 
 ## User Preferences
 

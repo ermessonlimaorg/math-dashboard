@@ -1,15 +1,45 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 import Sidebar from './Sidebar'
 import MobileNav from './MobileNav'
+import OnboardingTour from './OnboardingTour'
+import HelpButton from './HelpButton'
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const { status } = useSession()
   const pathname = usePathname()
   const isAuthPage = pathname === '/signin' || pathname === '/signup'
+  const [runTour, setRunTour] = useState(false)
+  const [showHelpButton, setShowHelpButton] = useState(false)
+
+  useEffect(() => {
+    if (status === 'authenticated' && pathname === '/dashboard') {
+      const tourCompleted = localStorage.getItem('mathdash-tour-completed')
+      const isDesktop = window.innerWidth >= 768
+      if (!tourCompleted && isDesktop) {
+        setTimeout(() => setRunTour(true), 1000)
+      }
+      setShowHelpButton(true)
+    } else if (status === 'authenticated') {
+      setShowHelpButton(true)
+    }
+  }, [status, pathname])
+
+  const handleStartTour = () => {
+    const isDesktop = window.innerWidth >= 768
+    if (isDesktop) {
+      setRunTour(true)
+    } else {
+      alert('O tour guiado funciona melhor em telas maiores. Por favor, acesse pelo computador para ver o tour completo.')
+    }
+  }
+
+  const handleFinishTour = () => {
+    setRunTour(false)
+  }
   
   if (isAuthPage) {
     return <>{children}</>
@@ -78,6 +108,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
           {children}
         </div>
       </main>
+      {showHelpButton && <HelpButton onClick={handleStartTour} />}
+      <OnboardingTour run={runTour} onFinish={handleFinishTour} />
     </div>
   )
 }

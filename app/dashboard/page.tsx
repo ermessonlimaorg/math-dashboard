@@ -63,7 +63,7 @@ export default async function DashboardPage() {
         <p className="text-sm md:text-base text-slate-500 mt-1">Resumo das questões sincronizadas e classificadas pela IA.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div data-tour="metrics" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         <MetricCard title="Questões" value={data.questionsCount} icon="questions" />
         <MetricCard title="Usuários únicos" value={data.uniqueUsers} icon="users" />
         <MetricCard title="Pendentes de IA" value={data.pendingClassify} icon="pending" />
