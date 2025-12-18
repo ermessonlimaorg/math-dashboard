@@ -20,7 +20,7 @@ export default async function FeedbackPage() {
         <p className="text-sm md:text-base text-slate-500 mt-1">Gerencie os feedbacks recebidos dos usuários.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+      <div data-tour="feedback-stats" className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
         <div className="card card-hover p-5 md:p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -49,7 +49,7 @@ export default async function FeedbackPage() {
         </div>
       </div>
 
-      <div className="card">
+      <div data-tour="feedback-form" className="card">
         <div className="p-4 md:p-6 border-b border-slate-100">
           <h2 className="text-lg font-semibold text-slate-900">Enviar feedback</h2>
         </div>
@@ -58,7 +58,7 @@ export default async function FeedbackPage() {
         </div>
       </div>
 
-      <div className="card">
+      <div data-tour="feedback-list" className="card">
         <div className="p-4 md:p-6 border-b border-slate-100">
           <h2 className="text-lg font-semibold text-slate-900">Feedbacks recentes</h2>
         </div>

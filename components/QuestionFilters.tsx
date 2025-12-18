@@ -77,7 +77,7 @@ export default function QuestionFilters() {
 
   return (
     <div className="space-y-4 md:space-y-6">
-      <div className="card p-4 md:p-6 space-y-4">
+      <div data-tour="questions-filters" className="card p-4 md:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 className="text-base font-semibold text-slate-900">Filtros</h3>

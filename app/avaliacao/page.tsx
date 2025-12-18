@@ -149,7 +149,7 @@ export default function AvaliacaoPage() {
         <p className="text-sm md:text-base text-slate-500 mt-1">Escolha um usuário, selecione uma questão e envie para a IA avaliar.</p>
       </div>
 
-      <div className="card p-4 md:p-6 space-y-5">
+      <div data-tour="avaliacao-form" className="card p-4 md:p-6 space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1.5">
             <label className="label">Usuário</label>
@@ -202,7 +202,7 @@ export default function AvaliacaoPage() {
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-end gap-3">
+        <div data-tour="avaliacao-buttons" className="flex flex-col sm:flex-row justify-end gap-3">
           <button
             onClick={() => handleSuggest()}
             disabled={suggestLoading || !selectedQuestionObj}

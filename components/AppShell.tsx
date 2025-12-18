@@ -16,6 +16,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const [showHelpButton, setShowHelpButton] = useState(false)
 
   useEffect(() => {
+    setRunTour(false)
+    
     if (status === 'authenticated' && pathname === '/dashboard') {
       const tourCompleted = localStorage.getItem('mathdash-tour-completed')
       const isDesktop = window.innerWidth >= 768
@@ -48,6 +50,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
   const isLoading = status === 'loading'
   const isAuthenticated = status === 'authenticated'
   const showNav = isAuthenticated || isLoading
+
+  const getCurrentPage = (): 'dashboard' | 'questions' | 'feedback' | 'avaliacao' => {
+    if (pathname === '/questions' || pathname.startsWith('/questions/')) return 'questions'
+    if (pathname === '/feedback' || pathname.startsWith('/feedback/')) return 'feedback'
+    if (pathname === '/avaliacao' || pathname.startsWith('/avaliacao/')) return 'avaliacao'
+    return 'dashboard'
+  }
 
   if (isLoading) {
     return (
@@ -109,7 +118,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </div>
       </main>
       {showHelpButton && <HelpButton onClick={handleStartTour} />}
-      <OnboardingTour run={runTour} onFinish={handleFinishTour} />
+      <OnboardingTour run={runTour} onFinish={handleFinishTour} currentPage={getCurrentPage()} />
     </div>
   )
 }

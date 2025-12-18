@@ -22,6 +22,7 @@ Key capabilities:
 - Updated color scheme with orange accents and glass morphism effects
 - Added guided onboarding tour using react-joyride (desktop only, auto-starts on first visit)
 - Added floating help button to restart the tour anytime
+- Tour is now page-specific: each page (Questions, Feedback, Avaliação IA) has seu próprio tour
 
 ## User Preferences
 
