@@ -2,12 +2,19 @@
 
 import { ReactNode } from 'react'
 import { useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 import Sidebar from './Sidebar'
 import MobileNav from './MobileNav'
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const { status } = useSession()
-  const showNav = status === 'authenticated'
+  const pathname = usePathname()
+  const isAuthPage = pathname === '/signin' || pathname === '/signup'
+  const showNav = status === 'authenticated' && !isAuthPage
+
+  if (isAuthPage) {
+    return <>{children}</>
+  }
 
   return (
     <div className="flex min-h-screen bg-slate-50">

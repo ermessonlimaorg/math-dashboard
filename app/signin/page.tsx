@@ -1,14 +1,16 @@
 'use client'
 
-import { signIn } from 'next-auth/react'
-import { FormEvent, Suspense, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { signIn, useSession } from 'next-auth/react'
+import { FormEvent, Suspense, useState, useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
 function SignInForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const { data: session, status } = useSession()
+  const router = useRouter()
   const params = useSearchParams()
   const callbackUrl = (() => {
     const raw = params.get('callbackUrl')
@@ -20,6 +22,28 @@ function SignInForm() {
       return raw.startsWith('/') ? raw : '/dashboard'
     }
   })()
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.replace(callbackUrl)
+    }
+  }, [status, callbackUrl, router])
+
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-orange-50 to-rose-50">
+        <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
+
+  if (status === 'authenticated') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-orange-50 to-rose-50">
+        <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
