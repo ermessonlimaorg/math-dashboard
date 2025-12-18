@@ -286,6 +286,7 @@ export default function OnboardingTour({ run, onFinish, currentPage }: Onboardin
         close: 'Fechar',
         last: 'Finalizar',
         next: 'Próximo',
+        nextLabelWithProgress: 'Próximo (Passo {step} de {steps})',
         skip: 'Pular tour',
         open: 'Abrir tour',
       }}
